@@ -1,0 +1,61 @@
+1 --- n filosofos
+
+3 acciones -- comer ; pensar ; dormir ; (si hacen una, no pueden hacer otra)
+
+n tenedores
+
+para comer, un filosofo debe coger tenedores de izquierda y derecha
+
+después de comer, el filósofo se va a dormir; cuando despierta, se pone a pensar
+
+Cuando un filósofo muere por inanicion, la simulación se detiene
+    Inanicion: cuando un filosofo nunca come
+
+Los filosofos no hablan entre ellos
+
+No saben si otro filosofo va a morir
+
+Todos deben evitar morir
+
+
+
+Argumentos : 
+
+    - number_of_philosophers:   numero de filosofos y numero de tenedores
+
+    - time_to_die(ms): si un filosofo no come antes de time_to_die, muere
+
+    - time_to_eat(ms): tiempo que tiene para comer; tendrá los tenedores ocupados
+
+    - time_to_sleep(ms): tiempo que tiene para dormir
+
+    - number_of_times_each_philosopher_must_eat (opcional): si cada filósofo come n veces, 
+      la simulación se detiene
+    
+
+Los filósofos tienen asignados un número del 1 al n 
+
+El filosofo 1 se sienta al lado del filosofo n; cualquier filosofo m se sienta al lado de los
+filosofos m-1 y m+1
+
+
+
+Logs: 
+
+    - Formato de los cambios de estado:
+
+        · timestamp_in_ms X has taken a fork
+        · timestamp_in_ms X is eating
+        · timestamp_in_ms X is sleeping
+        · timestamp_in_ms X is thinking
+        · timestamp_in_ms X died
+
+    - Un estado no se debe alterar por el estado de otros filosofos
+    - < 10 ms entre la muerte de un filosofo y momento en el que se imprime su muerte
+
+
+1 filosofo ---> 1 hilo (thread)
+
+1 tenedor para cada filosofo (si hay 1 filosofo, solo habra 1 tenedor)
+
+proteger estados de los tenedores con mutexes
