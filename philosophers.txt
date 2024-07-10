@@ -59,3 +59,9 @@ Logs:
 1 tenedor para cada filosofo (si hay 1 filosofo, solo habra 1 tenedor)
 
 proteger estados de los tenedores con mutexes
+
+
+------------------------DETALLES----------------------
+
+Makefile:
+	-fsanitize=thread --> it detects data races, and print statistics to stderr

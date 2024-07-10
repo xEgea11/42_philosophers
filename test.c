@@ -1,8 +1,4 @@
-#include <stdio.h> 
-#include <pthread.h>
-#include <string.h>
-#include <stdlib.h>
-#include <sys/time.h>
+#include "philosophers.h"
 
 int main (void)
 {
