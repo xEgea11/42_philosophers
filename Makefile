@@ -31,7 +31,7 @@ SANIT = -fsanitize=thread -g
 all: $(NAME)
 
 $(NAME): $(OBJ)
-	@$(CC) $(OBJ) -o $(NAME)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
 	@echo "$(GREEN)$(NAME) is ready$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
