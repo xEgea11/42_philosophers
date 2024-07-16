@@ -1,4 +1,5 @@
 #include "philosophers.h"
+#include "table.h"
 
 //./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
 
@@ -50,7 +51,7 @@ int main(int argc, char *argv[])
     }
     //When we declare philos as double array, free the outer array of philos 
     //Clean table 
-    //Time when philos end eating at
+    //Time when philos end eating at ... I think we don't have to print it, just remove it
     gettimeofday(&table->end_time, NULL);
     //End time in ms
     printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time));

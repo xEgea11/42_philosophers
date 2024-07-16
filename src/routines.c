@@ -1,4 +1,5 @@
 #include "philosophers.h"
+#include "table.h"
 
 
 //Routine for philosophers
@@ -8,25 +9,18 @@ void *say_hello(void *arg)
     //Hardcoded times of eating
     gettimeofday(&(philo->start), NULL);
     ft_print_action(philo->start, philo->id, ARRIVED);
-    //Hardcoded; We need to change this to make it more accurate
+                                                                                    //<------------  Hardcoded; We need to change this to make it more accurate
     printf("Waiting for others\n");
     usleep(100);
     while (philo->times_eaten < philo->times_must_eat)
     {
         gettimeofday(&(philo->current_time), NULL);
-        //This is why we cannot calculate if a thread is dead; once calculated diffs between times, a thread just waits 
+                                                                            //<-------------------- This is why we cannot calculate if a thread is dead; once calculated diffs between times, a thread just waits 
         if (philo->time_to_die < (ft_time_milis(philo->current_time) - ft_time_milis(philo->last_meal)))
         {
             ft_print_action(philo->current_time, philo->id, DEAD);
             philo->status = 1;
             return (NULL);
-        }
-
-        if (philo->time_to_sleep > (ft_time_milis(philo->current_time) - ft_time_milis(philo->last_meal)))
-        {
-            usleep(philo->time_to_sleep);
-            gettimeofday(&(philo->current_time), NULL);
-            ft_print_action(philo->current_time, philo->id, SLEEPING);
         }
         gettimeofday(&(philo->current_time), NULL);
         ft_print_action(philo->current_time, philo->id, THINKING);
@@ -48,6 +42,12 @@ void *say_hello(void *arg)
         //pthread_mutex_unlock(philo->print_mutex);
         pthread_mutex_unlock(philo->left_fork);
         pthread_mutex_unlock(philo->right_fork);
+        if (philo->times_eaten != philo->times_must_eat)
+        {
+            ft_print_action(philo->current_time, philo->id, SLEEPING);
+            gettimeofday(&(philo->current_time), NULL);
+            usleep(philo->time_to_sleep);
+        }        
     }
     gettimeofday(&(philo->end), NULL);
     ft_print_action(philo->end, philo->id, LEFT);

@@ -1,7 +1,9 @@
 #include "philosophers.h"
+#include "table.h"
 
-
-t_table *ft_set_table(int argc, char *argv[])
+/*                                                                <-- Function to initialize resources ... We need to check properly the input
+*/
+t_table *ft_set_table(int argc, char *argv[])       
 {
     t_table *table;
     int     i;
@@ -28,7 +30,8 @@ t_table *ft_set_table(int argc, char *argv[])
     return (table);
 }
 
-
+/*                                                                                  <-- Function to free the resources at the end of the program OR when error
+*/
 void ft_clean_table(t_table *table)
 {
     printf("Hello");
@@ -61,9 +64,10 @@ t_philo *ft_enter_philo(t_table *table, int i)
 }
 
 /*
+**  It initializes the table and set the philosophers to eat                    <-- We need one philo to control the table, stablish the routine to do so
 **  Remember that its passed by reference -- good practice?
 */
-void    ft_greet_philos(t_table **table)
+void    ft_greet_philos(t_table **table)                            
 {
     int i;
 

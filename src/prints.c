@@ -1,4 +1,5 @@
 #include "philosophers.h"
+#include "table.h"
 
 void ft_print_action(struct timeval time, int id, int opcode)
 {

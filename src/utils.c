@@ -1,4 +1,5 @@
 #include "philosophers.h"
+#include "table.h"
 
 //Calculate time in milliseconds
 long ft_time_milis(struct timeval time)

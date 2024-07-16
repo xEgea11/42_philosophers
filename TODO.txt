@@ -3,35 +3,20 @@ Set_table
 start_dining
 clean_table
 
-***************KEY THINGS*************************
-Manage timestamps
-Define clearly structs, we would need 2
-Management of threads
-Management of mutexes
 
 *****************TODO Things*********************
 -[Arg_checker] The checker works just by converting with ft_atoi func; we need to implement more error checking
 -[Arg_checker] Maybe we need more than we have defined 
 -[Init] How to initialize?
-	* Philosophers start dining before the rest arrive 
--[Error_checking] Check errors for thread init and thread join, at least
--[Thread_order] Philosophers don't initialize in the right order, check why
+	* We need a mechanism to make all philos wait until everyone is set
 -[Algorithm] structure the algorithm in taking the forks so there is no deadlock
+-[Error_checking] Check errors for thread init and thread join, at least
 -[Print function, data races] Since we changed the print function, so it has all the actions, there are data races, look where we need to put the mutex at
--[Philo_struct] We need a structure for the philosophers
-	* Id
-	* Thread
-	* Left_fork
-	* Right_fork
-	(At least 3 more things)
-	* asdasd
-	* asdasd
-	* asdasd
--[Table struct] we need a structure that works as a table
-	* Array of forks
-	* asdasd
-	* assdasd
--[Set_table] Function to prepare the table and initialize everything
--[start_dining] Routine so philosophers can do their actions 
+-[Waiter - Monitor] We need a threat with its routine to control every philosopher while they eat
 -[Clean_table] Function to clean the table and finish the program
+-[Timestamps] We need to properly set the time when philos eat, sleep and think
+-[Times_must_eat] Change the hardcode that we have so philos eat indefenitely if no "times_must_eat" is declared
 
+------------------------------DETALLES--------------------------------------
+Makefile:
+	-fsanitize=thread --> it detects data races, and print statistics to stderr

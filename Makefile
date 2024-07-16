@@ -55,16 +55,29 @@ re: fclean all
 
 run: 
 	@echo "$(GREEN)Launching philos normal$(RESET)"
-	@./$(NAME) 10 600 400 200
+	@./$(NAME) 5 800 200 200 5
 
 run2:
-	@echo "$(GREEN)Launching philos with times_to_eat$(RESET)"
-	@./$(NAME) 10 600 400 200 20 
+	@echo "$(GREEN)Launching 3 philos $(RESET)"
+	@./$(NAME) 3 600 150 150 3
 
-run3:
+tons:
 	@echo "$(GREEN)Launching TONS of philos$(RESET)"
-	@./$(NAME) 1000 800 200 200 
+	@./$(NAME) 50 1000 200 200 10
+
+edge:
+	@echo "$(GREEN)Launching philo with edge cases$(RESET)"
+	@./$(NAME) 5 5000 1000 1000 5
+
+single:
+	@echo "$(GREEN)Launching single philo$(RESET)"
+	@./$(NAME) ./philo 1 500 100 100 1
+
+no_way:
+	@echo "$(GREEN)Launching philo with no way to eat$(RESET)"
+	@./$(NAME) 5 1 1 1 1
 
 valgrind:
 	@valgrind --tool=helgrind  ./$(NAME) 4 410 200 200
-.PHONY: all clean fclean re run run2 run3
+
+.PHONY: all clean fclean re run run2 run3 single no_way
