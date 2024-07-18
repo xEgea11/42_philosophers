@@ -2,7 +2,7 @@ Check_args
 Set_table
 start_dining
 clean_table
-
+Test_git
 
 *****************TODO Things*********************
 -[Arg_checker] The checker works just by converting with ft_atoi func; we need to implement more error checking
