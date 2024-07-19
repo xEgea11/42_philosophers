@@ -9,8 +9,8 @@ typedef struct s_data
 {
     struct timeval start_time;
     struct timeval end_time;
-    int number_philo;
-    int times_must_eat;
+    size_t number_philo;
+    size_t times_must_eat;
     long time_to_die;
     long time_to_eat;
     long time_to_sleep;

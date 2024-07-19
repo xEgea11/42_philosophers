@@ -54,8 +54,28 @@ void *say_hello(void *arg)
     return (NULL);
 }
 
-//Routine for monitor                           <--- We need to do routine for monitor
-void *monitor(void *arg)
+int ft_everyone_ate(t_table *table)
 {
-    printf("Hello");
+    int i;
+    i = 0;
+    while (i < table->number_philo)
+    {
+        if (table->philosophers[i]->times_eaten != table->philosophers[i]->times_must_eat)
+            return (FALSE);
+        i++;
+    }
+    gettimeofday(&table->end_time, NULL);
+    printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time));
+    return (TRUE);
+}
+//Routine for monitor                           <--- We need to do routine for monitor
+void *serve(void *arg)
+{
+    t_table *table = (t_table *)arg;
+    while (!ft_everyone_ate(table))
+    {
+        printf(RED"THEY ARE STILL EATING, going back to the cuisine\n"RESET);
+        usleep(table->time_to_eat * 1000);
+    }
+    return (NULL);
 }

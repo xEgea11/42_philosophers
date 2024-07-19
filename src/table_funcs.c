@@ -70,6 +70,7 @@ t_philo *ft_enter_philo(t_table *table, int i)
 void    ft_greet_philos(t_table **table)                            
 {
     int i;
+    pthread_t monitor;
 
     i = 0;
     while (i < (*table)->number_philo)
@@ -77,4 +78,5 @@ void    ft_greet_philos(t_table **table)
         (*table)->philosophers[i] = ft_enter_philo(*table, i);
         i++;
     }
+    pthread_create(&monitor, NULL, serve, (void *)*table);
 }

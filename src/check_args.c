@@ -65,8 +65,8 @@ int ft_check_numbers(char **argv)
     i = 0;
     while (argv[i])
     {
-        //We let it provisionally for now
-        //It need to check a bunch of things - define what
+                                                        //<------------------  We let it provisionally for now
+                                                        //<------------------  It need to check a bunch of things - define what
         number = ft_atoi(argv[i]);
         if (ft_is_positive(number) == FALSE)
             return (EXIT_FAILURE);

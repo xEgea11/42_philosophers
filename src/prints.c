@@ -4,19 +4,19 @@
 void ft_print_action(struct timeval time, int id, int opcode)
 {
     if (opcode == FORK_TAKEN)
-        printf(BLUE "%ld %d, has taken a fork\n" RESET, ft_time_milis(time), id);
+        printf(BLUE "%ld %d, 🍴has taken a fork🍴\n" RESET, ft_time_milis(time), id);
     else if (opcode == EATING)
-        printf(GREEN "%ld philo"YELLOW " %d"GREEN ", is eating\n" RESET, ft_time_milis(time), id);
+        printf(GREEN "%ld philo"YELLOW " %d"GREEN ", 🍔is eating🍔\n" RESET, ft_time_milis(time), id);
     else if (opcode == SLEEPING)
-        printf(VIOLET "%ld %d is sleeping \n" RESET, ft_time_milis(time), id);
+        printf(VIOLET "%ld %d 😴is sleeping😴 \n" RESET, ft_time_milis(time), id);
     else if (opcode == THINKING)
-        printf(YELLOW "%ld %d is thinking\n" RESET, ft_time_milis(time), id);
+        printf(YELLOW "%ld %d 🤔is thinking🤔\n" RESET, ft_time_milis(time), id);
     else if (opcode == DEAD)
-        printf(RED "%ld I'm philo %d, I DIED\n" RESET, ft_time_milis(time), id);
+        printf(RED "%ld I'm philo %d, I DIED☠️\n" RESET, ft_time_milis(time), id);
     else if (opcode == ARRIVED)
-        printf(GREEN "%ld %d arrived :D\n" RESET, ft_time_milis(time), id);
+        printf(GREEN "%ld %d arrived 🤟😬\n" RESET, ft_time_milis(time), id);
     else if (opcode == LEFT)
-        printf(GREEN "%ld %d left\n" RESET, ft_time_milis(time), id);
+        printf(GREEN "%ld %d left✋😄\n" RESET, ft_time_milis(time), id);
     else 
         printf("Bad opcode\n");
 }

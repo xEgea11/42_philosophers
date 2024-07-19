@@ -12,7 +12,7 @@ Test_git
 -[Algorithm] structure the algorithm in taking the forks so there is no deadlock
 -[Error_checking] Check errors for thread init and thread join, at least
 -[Print function, data races] Since we changed the print function, so it has all the actions, there are data races, look where we need to put the mutex at
--[Waiter - Monitor] We need a threat with its routine to control every philosopher while they eat
+-[Waiter - Monitor] We need a thread with its routine to control every philosopher while they eat
 -[Clean_table] Function to clean the table and finish the program
 -[Timestamps] We need to properly set the time when philos eat, sleep and think
 -[Times_must_eat] Change the hardcode that we have so philos eat indefenitely if no "times_must_eat" is declared

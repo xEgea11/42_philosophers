@@ -72,7 +72,7 @@ int ft_check_args(int argc, char **argv);
 
 //Routine functions
 void *say_hello(void *arg);
-void *monitor(void *arg);
+void *serve(void *arg);
 
 //Print functions
 void ft_print_action(struct timeval time, int id, int opcode);
