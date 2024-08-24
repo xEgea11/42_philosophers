@@ -5,21 +5,19 @@
 
 int main(int argc, char *argv[])
 {
+    t_table *table;
+    int i;
+    
     if (ft_check_args(argc, argv) == FALSE)
     {
         printf("Arguments are not valid\n");
         return (EXIT_FAILURE);
     }
-    
-    t_table *table = ft_set_table(argc, argv);
-    int i;
-    //pthread_mutex_t print_mutex;              <---Still not set, look if it is necessary
 
+    table = ft_set_table(argc, argv);
     //We put the initial time here, but it must be put somewhere else
     gettimeofday(&table->start_time, NULL);
-    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time));
-
-    //pthread_mutex_init(&print_mutex, NULL);   <--- In case we need the mutex for the print function 
+    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time)); 
     
     //Philosophers arrive at dining room and are set up - they start dining there
     ft_greet_philos(&table);

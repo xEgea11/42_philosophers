@@ -1,7 +1,7 @@
 #include "philosophers.h"
 #include "table.h"
 
-/*                                                                <-- Function to initialize resources ... We need to check properly the input
+/*
 */
 t_table *ft_set_table(int argc, char *argv[])       
 {
@@ -9,16 +9,18 @@ t_table *ft_set_table(int argc, char *argv[])
     int     i;
 
     table = malloc(sizeof(t_table));
-    table->number_philo = ft_atoi(argv[1]);
+    table->end_simulation = FALSE;
+    table->number_philo = ft_atol(argv[1]);
     table->forks = malloc(sizeof(pthread_mutex_t) * table->number_philo);
     table->philosophers = malloc(sizeof(t_philo*) * table->number_philo);
-    table->time_to_die = ft_atoi(argv[2]);
-    table->time_to_eat = ft_atoi(argv[3]);
-    table->time_to_sleep = ft_atoi(argv[4]);
-    table->times_must_eat = -1;
+    table->time_to_die = ft_atol(argv[2]);
+    table->time_to_eat = ft_atol(argv[3]);
+    table->time_to_sleep = ft_atol(argv[4]);
 
     if (argc == 6)
-        table->times_must_eat = ft_atoi(argv[5]);
+        table->times_must_eat = ft_atol(argv[5]);
+    else
+        table->times_must_eat = -1;
 
     //Init mutexes -- setting the table
     i = 0;
@@ -48,9 +50,10 @@ t_philo *ft_enter_philo(t_table *table, int i)
     if (table->times_must_eat != -1)
         philo->times_must_eat = table->times_must_eat;
     else
-        philo->times_must_eat = 7;
+        philo->times_must_eat = 7;                          //<----------- Hard coded, change that
     philo->id = i;
     philo->status = 0;
+    philo->full = FALSE;
     philo->times_eaten = 0;
     philo->left_fork = &table->forks[i];
     philo->right_fork = &table->forks[(i + 1) % table->number_philo];
@@ -58,7 +61,7 @@ t_philo *ft_enter_philo(t_table *table, int i)
     philo->time_to_die = table->time_to_die;
     philo->time_to_eat = table->time_to_eat;
     philo->time_to_sleep = table->time_to_sleep;
-    philo->last_meal = table->start_time;
+    philo->last_meal = table->start_time;                   //<----------  Not sure about this 
     pthread_create(&(philo->thread), NULL, say_hello, (void *)philo);
     return (philo);
 }

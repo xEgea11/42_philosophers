@@ -41,6 +41,7 @@ typedef struct s_philo
     int id;
     //0 for alive, 1 for dead
     int status;
+    int full;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     //pthread_mutex_t *print_mutex;
@@ -64,10 +65,10 @@ typedef struct s_philo
 
 //Arg_check functions
 //provisionally
-int	ft_atoi(const char *str);
+int	ft_atol(const char *str);
 int ft_check_argc(int argc);
 int ft_is_positive(int number);
-int ft_check_numbers(char **argv);
+int ft_parse_input(char **argv);
 int ft_check_args(int argc, char **argv);
 
 //Routine functions

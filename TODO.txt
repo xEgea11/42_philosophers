@@ -5,11 +5,11 @@ clean_table
 Test_git
 
 *****************TODO Things*********************
--[Arg_checker] The checker works just by converting with ft_atoi func; we need to implement more error checking
--[Arg_checker] Maybe we need more than we have defined 
+-[Arg_checker]		 ----		I think is OK
+-[Set_table] 	Do we actually need to convert to microseconds (ie. multiply it by 1000)?
 -[Init] How to initialize?
 	* We need a mechanism to make all philos wait until everyone is set
--[Algorithm] structure the algorithm in taking the forks so there is no deadlock
+-[Algorithm] structure the algorithm in taking the forks so there is no deadlock ---> Implement it in routine?
 -[Error_checking] Check errors for thread init and thread join, at least
 -[Print function, data races] Since we changed the print function, so it has all the actions, there are data races, look where we need to put the mutex at
 -[Waiter - Monitor] We need a thread with its routine to control every philosopher while they eat

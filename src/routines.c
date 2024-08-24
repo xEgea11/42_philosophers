@@ -24,12 +24,25 @@ void *say_hello(void *arg)
         }
         gettimeofday(&(philo->current_time), NULL);
         ft_print_action(philo->current_time, philo->id, THINKING);
-        pthread_mutex_lock(philo->left_fork);
-        gettimeofday(&(philo->current_time), NULL);
-        ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
-        pthread_mutex_lock(philo->right_fork);
-        gettimeofday(&(philo->current_time), NULL);
-        ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+        if (philo->id % 2 == 0)
+        {
+            pthread_mutex_lock(philo->left_fork);
+            gettimeofday(&(philo->current_time), NULL);
+            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+            pthread_mutex_lock(philo->right_fork);
+            gettimeofday(&(philo->current_time), NULL);
+            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+        }
+        else if (philo->id % 2 != 0)
+        {
+            pthread_mutex_lock(philo->right_fork);
+            gettimeofday(&(philo->current_time), NULL);
+            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+            pthread_mutex_lock(philo->left_fork);
+            gettimeofday(&(philo->current_time), NULL);
+            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+        }
+        
         ft_print_action(philo->current_time, philo->id, EATING);
         gettimeofday(&(philo->start), NULL);
         gettimeofday(&(philo->current_time), NULL);
@@ -49,6 +62,7 @@ void *say_hello(void *arg)
             usleep(philo->time_to_sleep);
         }        
     }
+    philo->full = TRUE;
     gettimeofday(&(philo->end), NULL);
     ft_print_action(philo->end, philo->id, LEFT);
     return (NULL);

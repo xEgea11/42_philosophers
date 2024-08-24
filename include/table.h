@@ -7,8 +7,9 @@ typedef struct s_philo t_philo; //forwarded declaration
 
 typedef struct s_data
 {
-    struct timeval start_time;
-    struct timeval end_time;
+    int end_simulation;
+    struct timeval start_time;  //<--- All philos should start with this time
+    struct timeval end_time;       //<--- A philo dies or everyone has eaten 
     size_t number_philo;
     size_t times_must_eat;
     long time_to_die;
