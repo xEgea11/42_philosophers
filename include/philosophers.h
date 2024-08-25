@@ -44,13 +44,13 @@ typedef struct s_philo
     int id;
     int dead;
     int full;
+    //For synchronization purposes
     int arrived;
     int can_eat;
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
     //pthread_mutex_t *print_mutex;
     int times_eaten;
-    int times_must_eat;
     struct timeval last_meal;
     struct timeval current_time;
     struct timeval start;
@@ -59,6 +59,7 @@ typedef struct s_philo
     long time_to_die;
     long time_to_eat;
     long time_to_sleep;
+    int  times_must_eat;
 
     pthread_t thread;
 }   t_philo;
@@ -67,13 +68,13 @@ typedef struct s_philo
 
 
 //Arg_check functions
-//provisionally
+// utility functions
+int ft_is_space(char c);
 int	ft_atol(const char *str);
 int ft_check_argc(int argc);
-int ft_is_positive(int number);
-int ft_parse_input(char **argv);
-int ft_check_args(int argc, char **argv);
 
+int ft_parse_args(int argc, char **argv);
+int ft_parse_numbers(char **argv);
 int ft_no_meals_condition(int argc, char *argv[]);
 int ft_one_philo(char *argv[]);
 

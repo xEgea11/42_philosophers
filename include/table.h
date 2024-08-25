@@ -22,13 +22,11 @@ typedef struct s_data
 }   t_table;
 
 
-//Table functions
 t_table *ft_set_table(int argc, char *argv[]);
-void ft_clean_table(t_table *table);
-
-//greeting and saying goodbye to philos
 t_philo *ft_enter_philo(t_table *table, int i);
 void    ft_greet_philos(t_table **table);
+void    ft_finish_dinner(t_table *table);
+void ft_clean_table(t_table *table);
 
 
 

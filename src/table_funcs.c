@@ -65,9 +65,8 @@ void ft_clean_table(t_table *table)
         free(table->philosophers[i]);
         i++;
     }
-    free (table->philosophers);
+    free (table->philosophers);     //Just because its a double pointer
     gettimeofday(&table->end_time, NULL);
-    //End time in ms
     printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time));
     free(table);
 }
@@ -134,4 +133,17 @@ void    ft_greet_philos(t_table **table)
     gettimeofday(&(*table)->start_time, NULL);
     printf(RED "Start time: %ld\n" RESET, ft_time_milis((*table)->start_time)); 
     pthread_create(&(*table)->monitor, NULL, serve, (void *)*table);
+}
+
+void ft_finish_dinner(t_table *table)
+{
+    int i;
+    
+    i = 0;
+    while (i < table->number_philo)
+    {
+        pthread_join((table->philosophers[i]->thread), NULL);
+        i++;
+    }
+    pthread_join(table->monitor, NULL);
 }

@@ -8,11 +8,13 @@ SRC_DIR = src
 INC_DIR = include
 
 SRC = main.c \
-		check_args.c \
+		parse_args.c \
+		parse_args_utils.c \
 		prints.c \
 		utils.c \
 		table_funcs.c \
-		routines.c \
+		philos_routine.c \
+		waiter_routine.c \
 		#philo.c \
 		#threads.c \
 		#monitor.c
