@@ -21,6 +21,7 @@ Test_git
 -[Timestamps] We need to properly set the time when philos eat, sleep and think	--	Guess its OK ✅
 -[Times_must_eat] 	Change the hardcode that we have 
 					so philos eat indefenitely if no "times_must_eat" is declared	--	TODO  ❌
+-[philo_info]	Probably we need to add a ptr of the table to each philo, even if I didnt want to ❌s
 
 ------------------------------DETALLES--------------------------------------
 Makefile:

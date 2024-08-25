@@ -6,7 +6,7 @@
 /*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 12:18:52 by regea-go          #+#    #+#             */
-/*   Updated: 2024/08/25 12:40:31 by regea-go         ###   ########.fr       */
+/*   Updated: 2024/08/25 16:03:06 by regea-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         return (EXIT_SUCCESS);
     }
     table = ft_set_table(argc, argv);
-    ft_greet_philos(&table);
+    ft_greet_philos(table);
     ft_finish_dinner(table);
     ft_clean_table(table);
 

@@ -119,20 +119,20 @@ t_philo *ft_enter_philo(t_table *table, int id)      //<--- Refactor this one
     return (philo);
 }
 
-void    ft_greet_philos(t_table **table)                            
+void    ft_greet_philos(t_table *table)                            
 {
     int i;
 
-    gettimeofday(&(*table)->start_time, NULL);
+    gettimeofday(&(table)->start_time, NULL);
     i = 0;
-    while (i < (*table)->number_philo)
+    while (i < table->number_philo)
     {
-        (*table)->philosophers[i] = ft_enter_philo(*table, i);
+        table->philosophers[i] = ft_enter_philo(table, i);
         i++;
     }
-    gettimeofday(&(*table)->start_time, NULL);
-    printf(RED "Start time: %ld\n" RESET, ft_time_milis((*table)->start_time)); 
-    pthread_create(&(*table)->monitor, NULL, serve, (void *)*table);
+    gettimeofday(&table->start_time, NULL);
+    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time)); 
+    pthread_create(&table->monitor, NULL, serve, (void *)table);
 }
 
 void ft_finish_dinner(t_table *table)
