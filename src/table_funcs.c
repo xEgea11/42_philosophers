@@ -1,34 +1,48 @@
 #include "philosophers.h"
 #include "table.h"
 
-/*
-*/
-t_table *ft_set_table(int argc, char *argv[])       
+t_table *ft_init_data_table(int argc, char *argv[])
 {
     t_table *table;
-    int     i;
 
     table = malloc(sizeof(t_table));
-    table->end_simulation = FALSE;
     table->number_philo = ft_atol(argv[1]);
     table->forks = malloc(sizeof(pthread_mutex_t) * table->number_philo);
-    table->philosophers = malloc(sizeof(t_philo*) * table->number_philo);
+    table->philosophers = malloc(sizeof(t_philo *) * table->number_philo);
+    table->end_simulation = FALSE;
+    table->all_philos_ready = FALSE;
     table->time_to_die = ft_atol(argv[2]);
     table->time_to_eat = ft_atol(argv[3]);
     table->time_to_sleep = ft_atol(argv[4]);
-
     if (argc == 6)
         table->times_must_eat = ft_atol(argv[5]);
     else
         table->times_must_eat = -1;
+    
+    return (table);
+}
 
-    //Init mutexes -- setting the table
+void ft_init_mutexes(t_table *table)
+{
+    int i;
+
     i = 0;
     while (i < table->number_philo)
     {
         pthread_mutex_init(&table->forks[i], NULL);
         i++;
     }
+}
+/*
+*/
+t_table *ft_set_table(int argc, char *argv[])       
+{
+    t_table *table;
+    //int     i;
+
+    table = ft_init_data_table(argc, argv);
+    ft_init_mutexes(table);
+
     return (table);
 }
 
@@ -36,13 +50,29 @@ t_table *ft_set_table(int argc, char *argv[])
 */
 void ft_clean_table(t_table *table)
 {
-    //Destroy mutexes of each philo
-    //Destroy mutexes of the table
-    //Free the forks of the table
-    //Free the array of philosophers
+    int i;
+
+    i = 0;
+    while (i < table->number_philo)
+    {
+        pthread_mutex_destroy(&table->forks[i]);
+        i++;
+    }
+    free(table->forks);
+    i = 0;
+    while (i < table->number_philo)
+    {
+        free(table->philosophers[i]);
+        i++;
+    }
+    free (table->philosophers);
+    gettimeofday(&table->end_time, NULL);
+    //End time in ms
+    printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time));
+    free(table);
 }
 
-t_philo *ft_enter_philo(t_table *table, int i)
+t_philo *ft_data_init_philo(t_table *table, int id)
 {
     t_philo *philo;
 
@@ -52,27 +82,44 @@ t_philo *ft_enter_philo(t_table *table, int i)
         philo->times_must_eat = table->times_must_eat;
     else
         philo->times_must_eat = 7;                          //<----------- Hard coded, change that
-    philo->id = i;
-    philo->status = 0;
+    philo->id = id;
+    philo->dead = FALSE;
     philo->arrived = FALSE;
     philo->can_eat = FALSE;
     philo->full = FALSE;
     philo->times_eaten = 0;
-    philo->left_fork = &table->forks[i];
-    philo->right_fork = &table->forks[(i + 1) % table->number_philo];
-    //philosophers[i]->print_mutex = &print_mutex;
     philo->time_to_die = table->time_to_die;
     philo->time_to_eat = table->time_to_eat;
     philo->time_to_sleep = table->time_to_sleep;
-    philo->last_meal = table->start_time;                   //<----------  Not sure about this, we can just call gettime here 
+    philo->last_meal = table->start_time; 
+
+    return (philo);
+}
+
+void ft_assign_forks(t_table *table, t_philo *philo, int id)
+{
+    if (id % 2 == 0)
+    {
+        philo->first_fork = &table->forks[id];
+        philo->second_fork = &table->forks[(id + 1) % table->number_philo];
+    }
+    else
+    {
+        philo->first_fork = &table->forks[(id + 1) % table->number_philo];
+        philo->second_fork = &table->forks[id];
+    }
+}
+
+t_philo *ft_enter_philo(t_table *table, int id)      //<--- Refactor this one
+{
+    t_philo *philo;
+
+    philo = ft_data_init_philo(table, id);
+    ft_assign_forks(table, philo, id);
     pthread_create(&(philo->thread), NULL, say_hello, (void *)philo);
     return (philo);
 }
 
-/*
-**  It initializes the table and set the philosophers to eat                    <-- We need one philo to control the table, stablish the routine to do so
-**  Remember that its passed by reference -- good practice?
-*/
 void    ft_greet_philos(t_table **table)                            
 {
     int i;

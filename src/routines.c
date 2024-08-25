@@ -35,13 +35,22 @@ static int ft_philo_dead(t_table *table)
     i = 0;
     while (i < table->number_philo)
     {
-        if (table->philosophers[i]->status == 1)
+        if (table->philosophers[i]->dead == TRUE)
             return (TRUE);
         i++;
     }
     return (FALSE);
 }
 
+void ft_get_fork(t_philo *philo, int fork)
+{
+    if (fork == FIRST_FORK)
+        pthread_mutex_lock(philo->first_fork);
+    else if (fork == SECOND_FORK)
+        pthread_mutex_lock(philo->second_fork);
+    //gettimeofday(&(philo->current_time), NULL);
+    ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
+}
 /*
     Fake to lock the fork
     Sleep until the monitor will bust it
@@ -61,64 +70,40 @@ void *say_hello(void *arg)
     gettimeofday(&(philo->start), NULL);
     philo->arrived = TRUE;
     ft_print_action(philo->start, philo->id, ARRIVED);                                                
-    //Hardcoded; we need a function, like "wait_all_philos" to wait for all threads to be created
     while (philo->can_eat == FALSE)
     {
         printf("%d is waiting for others\n", philo->id);
     }
-    while (philo->times_eaten < philo->times_must_eat)
+    while (philo->full == FALSE)
     {
         gettimeofday(&(philo->current_time), NULL);
-                                                                            //<-------------------- This is why we cannot calculate if a thread is dead; once calculated diffs between times, a thread just waits 
+        //Not sure this works to check if the philo is dead
         if (philo->time_to_die < (ft_time_milis(philo->current_time) - ft_time_milis(philo->last_meal)))
         {
             ft_print_action(philo->current_time, philo->id, DEAD);
-            philo->status = 1;
+            philo->dead = TRUE;
             return (NULL);
         }
-        gettimeofday(&(philo->current_time), NULL);
         ft_print_action(philo->current_time, philo->id, THINKING);
-        if (philo->id % 2 == 0)
-        {
-            pthread_mutex_lock(philo->left_fork);
-            gettimeofday(&(philo->current_time), NULL);
-            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
-            pthread_mutex_lock(philo->right_fork);
-            gettimeofday(&(philo->current_time), NULL);
-            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
-        }
-        else if (philo->id % 2 != 0)
-        {
-            pthread_mutex_lock(philo->right_fork);
-            gettimeofday(&(philo->current_time), NULL);
-            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
-            pthread_mutex_lock(philo->left_fork);
-            gettimeofday(&(philo->current_time), NULL);
-            ft_print_action(philo->current_time, philo->id, FORK_TAKEN);
-        }
-        
+        ft_get_fork(philo, FIRST_FORK);
+        ft_get_fork(philo, SECOND_FORK);
         ft_print_action(philo->current_time, philo->id, EATING);
-        gettimeofday(&(philo->start), NULL);
-        gettimeofday(&(philo->current_time), NULL);
         gettimeofday(&(philo->last_meal), NULL);
         philo->times_eaten++;
-        while (philo->time_to_eat > (ft_time_milis(philo->current_time) - ft_time_milis(philo->start)))
-            gettimeofday(&(philo->current_time), NULL);
         //pthread_mutex_lock(philo->print_mutex);
         ft_print_times_eaten(philo->current_time, philo->id, philo->times_eaten, philo->times_must_eat);
+        usleep(philo->time_to_eat);
         //pthread_mutex_unlock(philo->print_mutex);
-        pthread_mutex_unlock(philo->left_fork);
-        pthread_mutex_unlock(philo->right_fork);
+        pthread_mutex_unlock(philo->first_fork);
+        pthread_mutex_unlock(philo->second_fork);
         if (philo->times_eaten == philo->times_must_eat)
             philo->full = TRUE;
-        if (philo->times_eaten != philo->times_must_eat)
+        if (philo->full == FALSE)
         {
             ft_print_action(philo->current_time, philo->id, SLEEPING);
-            gettimeofday(&(philo->current_time), NULL);
             usleep(philo->time_to_sleep);
         }        
     }
-    philo->full = TRUE;
     gettimeofday(&(philo->end), NULL);
     ft_print_action(philo->end, philo->id, LEFT);
     return (NULL);
@@ -143,9 +128,7 @@ void *serve(void *arg)
 {
     t_table *table = (t_table *)arg;
     while (ft_waiting_for_philos(table) == FALSE)
-    {
-        printf(RED"Table is not ready\n"RESET);
-    }
+        ;
     ft_start_dinner(table);
     while (!ft_everyone_ate(table))
     {
@@ -154,9 +137,7 @@ void *serve(void *arg)
             printf(RED"Someone died, stop the simulation\n"RESET);
             return (NULL);
         }
-        printf(RED"THEY ARE STILL EATING, going back to the cuisine\n"RESET);
-        usleep(table->time_to_eat * 1000);
     }
-    printf(RED"Everyone ate, bye i'm done here\n"RESET);
+    //printf(RED"Everyone ate, bye i'm done here\n"RESET);
     return (NULL);
 }

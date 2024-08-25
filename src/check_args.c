@@ -79,3 +79,23 @@ int ft_check_args(int argc, char **argv)
     return (TRUE);
     
 }
+
+int ft_no_meals_condition(int argc, char *argv[])
+{
+    if (argc == 6 && ft_atol(argv[5]) == 0)
+    {
+        printf("No meals to eat\n");
+        return (TRUE);
+    }
+    return (FALSE);
+}
+
+int ft_one_philo(char *argv[])
+{
+    if (ft_atol(argv[1]) == 1)
+    {
+        printf("Only one philosopher\n");           //<--- Ad hoc function for one philosopher
+        return (TRUE);
+    }
+    return (FALSE);
+}

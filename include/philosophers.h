@@ -23,8 +23,11 @@
 # define SLEEPING 1
 # define EATING 2
 # define DEAD 3
-# define ARRIVED 4
-# define LEFT 5
+# define ARRIVED 5
+# define LEFT 6
+
+# define FIRST_FORK 0
+# define SECOND_FORK 1
 
 # define FORK_TAKEN 6
 # define FORK_FREE 7
@@ -39,18 +42,16 @@
 typedef struct s_philo
 {
     int id;
-    //0 for alive, 1 for dead
-    int status;
+    int dead;
     int full;
     int arrived;
     int can_eat;
-    pthread_mutex_t *left_fork;
-    pthread_mutex_t *right_fork;
+    pthread_mutex_t *first_fork;
+    pthread_mutex_t *second_fork;
     //pthread_mutex_t *print_mutex;
     int times_eaten;
     int times_must_eat;
     struct timeval last_meal;
-    //current time; remove later maybe
     struct timeval current_time;
     struct timeval start;
     struct timeval end;
@@ -72,6 +73,9 @@ int ft_check_argc(int argc);
 int ft_is_positive(int number);
 int ft_parse_input(char **argv);
 int ft_check_args(int argc, char **argv);
+
+int ft_no_meals_condition(int argc, char *argv[]);
+int ft_one_philo(char *argv[]);
 
 //Routine functions
 void *say_hello(void *arg);

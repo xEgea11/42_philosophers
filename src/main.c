@@ -13,25 +13,20 @@ int main(int argc, char *argv[])
         printf("Arguments are not valid\n");
         return (EXIT_FAILURE);
     }
-
-    /*  1) If no meals, return
-     *  2) If only one philo, ad hoc function
-     */
-    if (argc == 6 && ft_atol(argv[5]) == 0)
-    {
-        printf("No meals to eat\n");
+    if (ft_no_meals_condition(argc, argv) == TRUE)
         return (EXIT_SUCCESS);
-    }
-    if (ft_atol(argv[1]) == 1)
+
+    if (ft_one_philo(argv) == TRUE)
     {
         printf("Only one philosopher\n");
         return (EXIT_SUCCESS);
     }
-
     table = ft_set_table(argc, argv);    
     //Philosophers arrive at dining room and are set up - they start dining there
     ft_greet_philos(&table);
 
+    /* CLEAN TABLE HERE */
+    //ft_clean_table(table);
     //Join threads
     i = 0;
     while (i < table->number_philo)
@@ -40,29 +35,24 @@ int main(int argc, char *argv[])
         i++;
     }
     pthread_join(table->monitor, NULL);
+    ft_clean_table(table);
     //Destroy mutexes
-    i = 0;
-    while (i < table->number_philo)
-    {
-        pthread_mutex_destroy(&table->forks[i]);
-        i++;
-    }
-
-    //FREE array of mutexes
-    //pthread_mutex_destroy(&print_mutex);
-    //philosophers leave the dining room
-    i = 0;
-    while (i < table->number_philo)
-    {
-        free(table->philosophers[i]);
-        i++;
-    }
-    //When we declare philos as double array, free the outer array of philos 
-    //Clean table 
-    //Time when philos end eating at ... I think we don't have to print it, just remove it
-    gettimeofday(&table->end_time, NULL);
-    //End time in ms
-    printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time));
+    //i = 0;
+    //while (i < table->number_philo)
+    //{
+    //    pthread_mutex_destroy(&table->forks[i]);
+    //    i++;
+    //}
+    //i = 0;
+    //while (i < table->number_philo)
+    //{
+    //    free(table->philosophers[i]);
+    //    i++;
+    //}
+    ////When we declare philos as double array, free the outer array of philos 
+    //gettimeofday(&table->end_time, NULL);
+    ////End time in ms
+    //printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time));
 
     return (EXIT_SUCCESS);
 }
