@@ -8,6 +8,7 @@ typedef struct s_philo t_philo; //forwarded declaration
 typedef struct s_data
 {
     int end_simulation;
+    int all_philos_ready;
     struct timeval start_time;  //<--- All philos should start with this time
     struct timeval end_time;       //<--- A philo dies or everyone has eaten 
     size_t number_philo;
@@ -16,6 +17,7 @@ typedef struct s_data
     long time_to_eat;
     long time_to_sleep;
     t_philo **philosophers;
+    pthread_t monitor;
     pthread_mutex_t *forks;
 }   t_table;
 

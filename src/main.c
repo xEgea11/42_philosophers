@@ -14,11 +14,21 @@ int main(int argc, char *argv[])
         return (EXIT_FAILURE);
     }
 
-    table = ft_set_table(argc, argv);
-    //We put the initial time here, but it must be put somewhere else
-    gettimeofday(&table->start_time, NULL);
-    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time)); 
-    
+    /*  1) If no meals, return
+     *  2) If only one philo, ad hoc function
+     */
+    if (argc == 6 && ft_atol(argv[5]) == 0)
+    {
+        printf("No meals to eat\n");
+        return (EXIT_SUCCESS);
+    }
+    if (ft_atol(argv[1]) == 1)
+    {
+        printf("Only one philosopher\n");
+        return (EXIT_SUCCESS);
+    }
+
+    table = ft_set_table(argc, argv);    
     //Philosophers arrive at dining room and are set up - they start dining there
     ft_greet_philos(&table);
 
@@ -29,7 +39,7 @@ int main(int argc, char *argv[])
         pthread_join((table->philosophers[i]->thread), NULL);
         i++;
     }
-
+    pthread_join(table->monitor, NULL);
     //Destroy mutexes
     i = 0;
     while (i < table->number_philo)

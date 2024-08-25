@@ -42,6 +42,8 @@ typedef struct s_philo
     //0 for alive, 1 for dead
     int status;
     int full;
+    int arrived;
+    int can_eat;
     pthread_mutex_t *left_fork;
     pthread_mutex_t *right_fork;
     //pthread_mutex_t *print_mutex;

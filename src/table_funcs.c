@@ -36,9 +36,10 @@ t_table *ft_set_table(int argc, char *argv[])
 */
 void ft_clean_table(t_table *table)
 {
-    printf("Hello");
-
-
+    //Destroy mutexes of each philo
+    //Destroy mutexes of the table
+    //Free the forks of the table
+    //Free the array of philosophers
 }
 
 t_philo *ft_enter_philo(t_table *table, int i)
@@ -53,6 +54,8 @@ t_philo *ft_enter_philo(t_table *table, int i)
         philo->times_must_eat = 7;                          //<----------- Hard coded, change that
     philo->id = i;
     philo->status = 0;
+    philo->arrived = FALSE;
+    philo->can_eat = FALSE;
     philo->full = FALSE;
     philo->times_eaten = 0;
     philo->left_fork = &table->forks[i];
@@ -61,7 +64,7 @@ t_philo *ft_enter_philo(t_table *table, int i)
     philo->time_to_die = table->time_to_die;
     philo->time_to_eat = table->time_to_eat;
     philo->time_to_sleep = table->time_to_sleep;
-    philo->last_meal = table->start_time;                   //<----------  Not sure about this 
+    philo->last_meal = table->start_time;                   //<----------  Not sure about this, we can just call gettime here 
     pthread_create(&(philo->thread), NULL, say_hello, (void *)philo);
     return (philo);
 }
@@ -73,13 +76,15 @@ t_philo *ft_enter_philo(t_table *table, int i)
 void    ft_greet_philos(t_table **table)                            
 {
     int i;
-    pthread_t monitor;
 
+    gettimeofday(&(*table)->start_time, NULL);
     i = 0;
     while (i < (*table)->number_philo)
     {
         (*table)->philosophers[i] = ft_enter_philo(*table, i);
         i++;
     }
-    pthread_create(&monitor, NULL, serve, (void *)*table);
+    gettimeofday(&(*table)->start_time, NULL);
+    printf(RED "Start time: %ld\n" RESET, ft_time_milis((*table)->start_time)); 
+    pthread_create(&(*table)->monitor, NULL, serve, (void *)*table);
 }
