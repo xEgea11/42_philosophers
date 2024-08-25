@@ -39,6 +39,8 @@
 # define YELLOW "\033[0;33m"
 # define RESET "\033[0m"
 
+typedef struct s_data t_table;
+
 typedef struct s_philo
 {
     int id;
@@ -49,19 +51,16 @@ typedef struct s_philo
     int can_eat;
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
-    //pthread_mutex_t *print_mutex;
+    //
     int times_eaten;
     struct timeval last_meal;
     struct timeval current_time;
     struct timeval start;
     struct timeval end;
 
-    long time_to_die;
-    long time_to_eat;
-    long time_to_sleep;
-    int  times_must_eat;
-
-    pthread_t thread;
+    t_table *table;
+    pthread_t philo;
+    
 }   t_philo;
 
 
@@ -83,11 +82,11 @@ void *say_hello(void *arg);
 void *serve(void *arg);
 
 //Print functions
-void ft_print_action(struct timeval time, int id, int opcode);
-void ft_print_times_eaten(struct timeval current_time, int id, int times_eaten, int must_eat);
+void ft_print_action(t_philo *philo, struct timeval time, int id, int opcode);
+void ft_print_times_eaten(struct timeval current_time, int id, int times_eaten, int must_eat, t_table *table);
 
 
 //Utils functions
-long ft_time_milis(struct timeval time);
+long ft_time_milis(struct timeval time, t_table *table);
 
 #endif

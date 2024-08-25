@@ -11,13 +11,13 @@ t_table *ft_init_data_table(int argc, char *argv[])
     table->philosophers = malloc(sizeof(t_philo *) * table->number_philo);
     table->end_simulation = FALSE;
     table->all_philos_ready = FALSE;
-    table->time_to_die = ft_atol(argv[2]);
-    table->time_to_eat = ft_atol(argv[3]);
-    table->time_to_sleep = ft_atol(argv[4]);
+    table->time_to_die = ft_atol(argv[2]) * 1000;           //Convert to miliseconds
+    table->time_to_eat = ft_atol(argv[3]) * 1000;
+    table->time_to_sleep = ft_atol(argv[4]) * 1000;
     if (argc == 6)
         table->times_must_eat = ft_atol(argv[5]);
     else
-        table->times_must_eat = -1;
+        table->times_must_eat = 7;              //Hardcoded, change this
     
     return (table);
 }
@@ -32,13 +32,13 @@ void ft_init_mutexes(t_table *table)
         pthread_mutex_init(&table->forks[i], NULL);
         i++;
     }
+    pthread_mutex_init(&table->print_mutex, NULL);
 }
 /*
 */
 t_table *ft_set_table(int argc, char *argv[])       
 {
     t_table *table;
-    //int     i;
 
     table = ft_init_data_table(argc, argv);
     ft_init_mutexes(table);
@@ -58,6 +58,7 @@ void ft_clean_table(t_table *table)
         pthread_mutex_destroy(&table->forks[i]);
         i++;
     }
+    pthread_mutex_destroy(&table->print_mutex);
     free(table->forks);
     i = 0;
     while (i < table->number_philo)
@@ -67,7 +68,7 @@ void ft_clean_table(t_table *table)
     }
     free (table->philosophers);     //Just because its a double pointer
     gettimeofday(&table->end_time, NULL);
-    printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time));
+    printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time, table));
     free(table);
 }
 
@@ -77,20 +78,14 @@ t_philo *ft_data_init_philo(t_table *table, int id)
 
     philo = malloc(sizeof(t_philo));
 
-    if (table->times_must_eat != -1)
-        philo->times_must_eat = table->times_must_eat;
-    else
-        philo->times_must_eat = 7;                          //<----------- Hard coded, change that
     philo->id = id;
     philo->dead = FALSE;
     philo->arrived = FALSE;
     philo->can_eat = FALSE;
     philo->full = FALSE;
     philo->times_eaten = 0;
-    philo->time_to_die = table->time_to_die;
-    philo->time_to_eat = table->time_to_eat;
-    philo->time_to_sleep = table->time_to_sleep;
-    philo->last_meal = table->start_time; 
+    philo->last_meal = table->start_time;
+    philo->table = table;
 
     return (philo);
 }
@@ -115,7 +110,7 @@ t_philo *ft_enter_philo(t_table *table, int id)      //<--- Refactor this one
 
     philo = ft_data_init_philo(table, id);
     ft_assign_forks(table, philo, id);
-    pthread_create(&(philo->thread), NULL, say_hello, (void *)philo);
+    pthread_create(&(philo->philo), NULL, say_hello, (void *)philo);
     return (philo);
 }
 
@@ -131,7 +126,7 @@ void    ft_greet_philos(t_table *table)
         i++;
     }
     gettimeofday(&table->start_time, NULL);
-    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time)); 
+    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time, table)); 
     pthread_create(&table->monitor, NULL, serve, (void *)table);
 }
 
@@ -142,7 +137,7 @@ void ft_finish_dinner(t_table *table)
     i = 0;
     while (i < table->number_philo)
     {
-        pthread_join((table->philosophers[i]->thread), NULL);
+        pthread_join((table->philosophers[i]->philo), NULL);
         i++;
     }
     pthread_join(table->monitor, NULL);

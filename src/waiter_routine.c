@@ -38,7 +38,7 @@ static int ft_everyone_ate(t_table *table)
         i++;
     }
     gettimeofday(&table->end_time, NULL);
-    printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time));
+    printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time, table));
     return (TRUE);
 }
 
