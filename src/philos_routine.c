@@ -29,7 +29,7 @@ void *say_hello(void *arg)
     //Hardcoded times of eating
     gettimeofday(&(philo->start), NULL);
     philo->arrived = TRUE;
-    ft_print_action(philo, philo->start, philo->id, ARRIVED);                                                
+    //ft_print_action(philo, philo->start, philo->id, ARRIVED);                                                
     while (philo->can_eat == FALSE)
     {
         printf("%d is waiting for others\n", philo->id);
@@ -50,10 +50,7 @@ void *say_hello(void *arg)
         ft_print_action(philo, philo->current_time, philo->id, EATING);
         gettimeofday(&(philo->last_meal), NULL);
         philo->times_eaten++;
-        //pthread_mutex_lock(philo->print_mutex);
-        ft_print_times_eaten(philo->current_time, philo->id, philo->times_eaten, philo->table->times_must_eat, philo->table);
-        usleep(philo->table->time_to_eat);
-        //pthread_mutex_unlock(philo->print_mutex);
+        usleep(ft_milis_to_micros(philo->table->time_to_eat));
         pthread_mutex_unlock(philo->first_fork);
         pthread_mutex_unlock(philo->second_fork);
         if (philo->times_eaten == philo->table->times_must_eat)
@@ -61,11 +58,11 @@ void *say_hello(void *arg)
         if (philo->full == FALSE)
         {
             ft_print_action(philo, philo->current_time, philo->id, SLEEPING);
-            usleep(philo->table->time_to_sleep);
+            usleep(ft_milis_to_micros(philo->table->time_to_sleep));
         }        
     }
     gettimeofday(&(philo->end), NULL);
-    ft_print_action(philo, philo->end, philo->id, LEFT);
+    //ft_print_action(philo, philo->end, philo->id, LEFT);
     return (NULL);
 }
 

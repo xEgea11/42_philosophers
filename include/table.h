@@ -34,6 +34,4 @@ void    ft_greet_philos(t_table *table);
 void    ft_finish_dinner(t_table *table);
 void ft_clean_table(t_table *table);
 
-
-
 #endif

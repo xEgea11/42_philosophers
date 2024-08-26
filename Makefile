@@ -15,9 +15,7 @@ SRC = main.c \
 		table_funcs.c \
 		philos_routine.c \
 		waiter_routine.c \
-		#philo.c \
-		#threads.c \
-		#monitor.c
+
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
 

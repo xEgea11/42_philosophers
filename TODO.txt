@@ -6,7 +6,7 @@ Test_git
 
 *****************TODO Things*********************
 -[Arg_checker]		 ----		I think is OK ✅
--[Set_table] 	Do we actually need to convert to microseconds (ie. multiply it by 1000)? ❌
+-[Set_table] 	Do we actually need to convert to microseconds (ie. multiply it by 1000)? ✅
 -[Init] How to initialize?	----- Looks like OK ✅
 -[Algorithm] structure the algorithm in taking the forks so there is no deadlock ---> Looks like OK ✅
 -[Starvation]	--> Apparently this manner can cause starvation --> Maybe we should force the philos to think
@@ -21,7 +21,9 @@ Test_git
 -[Timestamps] We need to properly set the time when philos eat, sleep and think	--	Guess its OK ✅
 -[Times_must_eat] 	Change the hardcode that we have 
 					so philos eat indefenitely if no "times_must_eat" is declared	--	TODO  ❌
--[philo_info]	Probably we need to add a ptr of the table to each philo, even if I didnt want to ❌s
+-[philo_info]	Probably we need to add a ptr of the table to each philo, even if I didnt want to ✅
+-[1 philo function] -- Implement the case where there is only one philo ❌
+-[Timestamp]	--	Current time in ms --- Do we need to set at 0 with "start time?" 
 
 ------------------------------DETALLES--------------------------------------
 Makefile:

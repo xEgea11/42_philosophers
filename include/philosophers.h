@@ -83,10 +83,9 @@ void *serve(void *arg);
 
 //Print functions
 void ft_print_action(t_philo *philo, struct timeval time, int id, int opcode);
-void ft_print_times_eaten(struct timeval current_time, int id, int times_eaten, int must_eat, t_table *table);
-
 
 //Utils functions
 long ft_time_milis(struct timeval time, t_table *table);
+long ft_milis_to_micros(long milis);
 
 #endif

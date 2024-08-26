@@ -11,9 +11,9 @@ t_table *ft_init_data_table(int argc, char *argv[])
     table->philosophers = malloc(sizeof(t_philo *) * table->number_philo);
     table->end_simulation = FALSE;
     table->all_philos_ready = FALSE;
-    table->time_to_die = ft_atol(argv[2]) * 1000;           //Convert to miliseconds
-    table->time_to_eat = ft_atol(argv[3]) * 1000;
-    table->time_to_sleep = ft_atol(argv[4]) * 1000;
+    table->time_to_die = ft_atol(argv[2]);
+    table->time_to_eat = ft_atol(argv[3]);
+    table->time_to_sleep = ft_atol(argv[4]);
     if (argc == 6)
         table->times_must_eat = ft_atol(argv[5]);
     else
