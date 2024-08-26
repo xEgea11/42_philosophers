@@ -13,56 +13,54 @@
 //}
 
 
-void ft_get_fork(t_philo *philo, int fork)
+void ft_get_forks(t_philo *philo)
 {
-    if (fork == FIRST_FORK)
-        pthread_mutex_lock(philo->first_fork);
-    else if (fork == SECOND_FORK)
-        pthread_mutex_lock(philo->second_fork);
+    pthread_mutex_lock(philo->first_fork);
     ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+    pthread_mutex_lock(philo->second_fork);
+    ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+}
+
+void ft_leave_forks(t_philo *philo)
+{
+    pthread_mutex_unlock(philo->first_fork);
+    pthread_mutex_unlock(philo->second_fork);
 }
 
 //Routine for philosophers
 void *say_hello(void *arg)
 {
-    t_philo *philo = (t_philo *)arg;
-    //Hardcoded times of eating
-    gettimeofday(&(philo->start), NULL);
+    t_philo *philo;
+    
+    philo = (t_philo *)arg;
+
+    pthread_mutex_lock(&philo->arrived_mutex);
     philo->arrived = TRUE;
-    //ft_print_action(philo, philo->start, philo->id, ARRIVED);                                                
+    pthread_mutex_unlock(&philo->arrived_mutex);
     while (philo->can_eat == FALSE)
-    {
-        printf("%d is waiting for others\n", philo->id);
-    }
+        ;
     while (philo->full == FALSE)
     {
-        gettimeofday(&(philo->current_time), NULL);
-        //Not sure this works to check if the philo is dead
-        if (philo->table->time_to_die < (ft_time_milis(philo->current_time, philo->table) - ft_time_milis(philo->last_meal, philo->table)))
-        {
-            ft_print_action(philo, philo->current_time, philo->id, DEAD);
-            philo->dead = TRUE;
-            return (NULL);
-        }
-        ft_print_action(philo, philo->current_time, philo->id, THINKING);
-        ft_get_fork(philo, FIRST_FORK);
-        ft_get_fork(philo, SECOND_FORK);
-        ft_print_action(philo, philo->current_time, philo->id, EATING);
+        ft_get_forks(philo);
         gettimeofday(&(philo->last_meal), NULL);
+        ft_print_action(philo, philo->current_time, philo->id, EATING);
         philo->times_eaten++;
         usleep(ft_milis_to_micros(philo->table->time_to_eat));
-        pthread_mutex_unlock(philo->first_fork);
-        pthread_mutex_unlock(philo->second_fork);
-        if (philo->times_eaten == philo->table->times_must_eat)
+        ft_leave_forks(philo);
+        if (philo->table->nbr_meals == TRUE && philo->times_eaten == philo->table->times_must_eat)
+        {
+            ft_print_action(philo, philo->current_time, philo->id, LEFT);
+            pthread_mutex_lock(&philo->full_mutex);
             philo->full = TRUE;
+            pthread_mutex_unlock(&philo->full_mutex);
+        }
         if (philo->full == FALSE)
         {
             ft_print_action(philo, philo->current_time, philo->id, SLEEPING);
             usleep(ft_milis_to_micros(philo->table->time_to_sleep));
+            ft_print_action(philo, philo->current_time, philo->id, THINKING);
         }        
     }
-    gettimeofday(&(philo->end), NULL);
-    //ft_print_action(philo, philo->end, philo->id, LEFT);
     return (NULL);
 }
 

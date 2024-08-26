@@ -3,11 +3,16 @@
 static int ft_waiting_for_philos(t_table *table)
 {
     int i;
+    int value;
 
     i = 0;
+    value = 0;
     while (i < table->number_philo)
     {
-        if (table->philosophers[i]->arrived == FALSE)   //<---- Maybe put a mutex here
+        pthread_mutex_lock(&table->philosophers[i]->arrived_mutex);
+        value = table->philosophers[i]->arrived;
+        pthread_mutex_unlock(&table->philosophers[i]->arrived_mutex);
+        if (value == FALSE)
             return (FALSE);
         i++;
     }
@@ -21,40 +26,49 @@ static void ft_start_dinner(t_table *table)
     i = 0;
     while (i < table->number_philo)
     {
-        table->philosophers[i]->can_eat = TRUE;         //<---- Maybe put a mutex here
-        printf("Philo %d can eat\n", table->philosophers[i]->id);
+        pthread_mutex_lock(&table->philosophers[i]->can_eat_mutex);
+        table->philosophers[i]->can_eat = TRUE;         
+        pthread_mutex_unlock(&table->philosophers[i]->can_eat_mutex);
         i++;
     }
+}
+
+static int ft_check_death(t_table *table)
+{
+    int i;
+
+    i = 0;
+    while (i < table->number_philo)
+    {
+        if (ft_time_milis(table->philosophers[i]->last_meal, table) > table->time_to_die)
+        {
+            ft_print_action(table->philosophers[i], table->end_time, table->philosophers[i]->id, DEAD);
+            return (TRUE);
+        }
+        i++;
+    }
+    return (FALSE);
 }
 
 static int ft_everyone_ate(t_table *table)
 {
     int i;
+    int value;
+
     i = 0;
+    value = 0;
     while (i < table->number_philo)
     {
-        if (table->philosophers[i]->full == FALSE)
+        pthread_mutex_lock(&table->philosophers[i]->full_mutex);
+        value = table->philosophers[i]->full;
+        pthread_mutex_unlock(&table->philosophers[i]->full_mutex);
+        if (value == FALSE)
             return (FALSE);
         i++;
     }
-    gettimeofday(&table->end_time, NULL);
-    printf(RED "End time: %ld\n" RESET, ft_time_milis(table->end_time, table));
     return (TRUE);
 }
 
-static int ft_philo_dead(t_table *table)
-{
-    int i;
-
-    i = 0;
-    while (i < table->number_philo)
-    {
-        if (table->philosophers[i]->dead == TRUE)
-            return (TRUE);
-        i++;
-    }
-    return (FALSE);
-}
 
 void *serve(void *arg)
 {
@@ -64,12 +78,8 @@ void *serve(void *arg)
     ft_start_dinner(table);
     while (!ft_everyone_ate(table))
     {
-        if (ft_philo_dead(table) == TRUE)
-        {
-            printf(RED"Someone died, stop the simulation\n"RESET);
+        if (ft_check_death(table) == TRUE)
             return (NULL);
-        }
     }
-    //printf(RED"Everyone ate, bye i'm done here\n"RESET);
     return (NULL);
 }

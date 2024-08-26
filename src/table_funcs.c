@@ -15,9 +15,15 @@ t_table *ft_init_data_table(int argc, char *argv[])
     table->time_to_eat = ft_atol(argv[3]);
     table->time_to_sleep = ft_atol(argv[4]);
     if (argc == 6)
+    {
+        table->nbr_meals = TRUE;
         table->times_must_eat = ft_atol(argv[5]);
+    }
     else
-        table->times_must_eat = 7;              //Hardcoded, change this
+    {
+        table->nbr_meals = FALSE;
+        table->times_must_eat = -1;
+    }
     
     return (table);
 }
@@ -46,7 +52,7 @@ t_table *ft_set_table(int argc, char *argv[])
     return (table);
 }
 
-/*                                                                                  <-- Function to free the resources at the end of the program OR when error
+/*                                                                                  
 */
 void ft_clean_table(t_table *table)
 {
@@ -66,7 +72,7 @@ void ft_clean_table(t_table *table)
         free(table->philosophers[i]);
         i++;
     }
-    free (table->philosophers);     //Just because its a double pointer
+    free (table->philosophers);
     gettimeofday(&table->end_time, NULL);
     printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time, table));
     free(table);
@@ -79,13 +85,15 @@ t_philo *ft_data_init_philo(t_table *table, int id)
     philo = malloc(sizeof(t_philo));
 
     philo->id = id;
-    philo->dead = FALSE;
     philo->arrived = FALSE;
     philo->can_eat = FALSE;
     philo->full = FALSE;
     philo->times_eaten = 0;
-    philo->last_meal = table->start_time;
+    philo->last_meal = table->start_time;                   //Mbe change it 
     philo->table = table;
+    pthread_mutex_init(&philo->arrived_mutex, NULL);
+    pthread_mutex_init(&philo->can_eat_mutex, NULL);
+    pthread_mutex_init(&philo->full_mutex, NULL);
 
     return (philo);
 }
@@ -126,7 +134,6 @@ void    ft_greet_philos(t_table *table)
         i++;
     }
     gettimeofday(&table->start_time, NULL);
-    printf(RED "Start time: %ld\n" RESET, ft_time_milis(table->start_time, table)); 
     pthread_create(&table->monitor, NULL, serve, (void *)table);
 }
 

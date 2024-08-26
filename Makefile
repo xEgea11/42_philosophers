@@ -61,6 +61,10 @@ run2:
 	@echo "$(GREEN)Launching 3 philos $(RESET)"
 	@./$(NAME) 3 600 150 150 3
 
+run3:
+		@echo "$(GREEN)Launching philos no meals$(RESET)"
+	@./$(NAME) 5 800 200 200 
+
 tons:
 	@echo "$(GREEN)Launching TONS of philos$(RESET)"
 	@./$(NAME) 50 1000 200 200 10

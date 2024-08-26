@@ -10,20 +10,22 @@ Test_git
 -[Init] How to initialize?	----- Looks like OK ✅
 -[Algorithm] structure the algorithm in taking the forks so there is no deadlock ---> Looks like OK ✅
 -[Starvation]	--> Apparently this manner can cause starvation --> Maybe we should force the philos to think
-																	a fraction of the time  ❌
+																	a fraction of the time  ❌ --> Still not needed
 -[Error_checking] Check errors for thread init and thread join, at least  ❌
 -[Print function, data races] 	Since we changed the print function, 
 								so it has all the actions, there are data races, 
-								look where we need to put the mutex at			❌	--- Do we actually need it?
+								look where we need to put the mutex at			✅	--- Do we actually need it?
 -[Waiter - Monitor] We need a thread with its routine 
 					to control every philosopher while they eat	----	Looks like OK ✅
 -[Clean_table] Function to clean the table and finish the program	--	Guess its OK ✅
 -[Timestamps] We need to properly set the time when philos eat, sleep and think	--	Guess its OK ✅
 -[Times_must_eat] 	Change the hardcode that we have 
-					so philos eat indefenitely if no "times_must_eat" is declared	--	TODO  ❌
+					so philos eat indefenitely if no "times_must_eat" is declared	--	TODO  ✅
 -[philo_info]	Probably we need to add a ptr of the table to each philo, even if I didnt want to ✅
 -[1 philo function] -- Implement the case where there is only one philo ❌
--[Timestamp]	--	Current time in ms --- Do we need to set at 0 with "start time?" 
+-[Timestamp]	--	Current time in ms --- Do we need to set at 0 with "start time?" ✅
+-[DEATHS]	--	How do we do to make philos stop eating once there is someone dead? 
+-[KEEP_EATING]	--	IF some of them have eaten X times, maybe they need to keep eating until the last one finishes to avoid death ❌
 
 ------------------------------DETALLES--------------------------------------
 Makefile:

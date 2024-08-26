@@ -39,6 +39,15 @@ void ft_print_dead(t_philo *philo, struct timeval time, int id)
     printf(RED "%ld %d died,\n" RESET, ft_time_milis(time, philo->table), id);
     pthread_mutex_unlock(&philo->table->print_mutex);
 }
+
+void ft_print_left(t_philo *philo, struct timeval time, int id)
+{
+    pthread_mutex_lock(&philo->table->print_mutex);
+    gettimeofday(&(time), NULL);
+    printf(GREEN "%ld %d left ✋😬\n" RESET, ft_time_milis(time, philo->table), id);
+    pthread_mutex_unlock(&philo->table->print_mutex);
+}
+
 /* NOT NEEDED */
 //void ft_print_arrived(t_philo *philo, struct timeval time, int id)
 //{
@@ -48,13 +57,7 @@ void ft_print_dead(t_philo *philo, struct timeval time, int id)
 //    pthread_mutex_unlock(&philo->table->print_mutex);
 //}
 //
-//void ft_print_left(t_philo *philo, struct timeval time, int id)
-//{
-//    pthread_mutex_lock(&philo->table->print_mutex);
-//    gettimeofday(&(time), NULL);
-//    printf(GREEN "%ld %d left✋😄\n" RESET, ft_time_milis(time, philo->table), id);
-//    pthread_mutex_unlock(&philo->table->print_mutex);
-//}
+
 
 void ft_print_action(t_philo *philo, struct timeval time, int id, int opcode)
 {
@@ -68,10 +71,10 @@ void ft_print_action(t_philo *philo, struct timeval time, int id, int opcode)
         ft_print_thinking(philo, time, id);
     else if (opcode == DEAD)
         ft_print_dead(philo, time, id);
-    //else if (opcode == ARRIVED)
-    //    ft_print_arrived(philo, time, id);
-    //else if (opcode == LEFT)
-    //    ft_print_left(philo, time, id);
+    else if (opcode == LEFT)
+        ft_print_left(philo, time, id);
     else 
         printf("Bad opcode\n");
+    //else if (opcode == ARRIVED)
+    //    ft_print_arrived(philo, time, id);
 }

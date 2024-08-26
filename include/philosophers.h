@@ -23,14 +23,17 @@
 # define SLEEPING 1
 # define EATING 2
 # define DEAD 3
+# define LEFT 4
 # define ARRIVED 5
-# define LEFT 6
 
 # define FIRST_FORK 0
 # define SECOND_FORK 1
 
 # define FORK_TAKEN 6
 # define FORK_FREE 7
+
+# define READ 1
+# define WRITE 0
 
 # define GREEN "\033[0;32m"
 # define BLUE "\033[0;34m"
@@ -44,11 +47,14 @@ typedef struct s_data t_table;
 typedef struct s_philo
 {
     int id;
-    int dead;
     int full;
     //For synchronization purposes
     int arrived;
     int can_eat;
+    pthread_mutex_t full_mutex;
+    pthread_mutex_t arrived_mutex;
+    pthread_mutex_t can_eat_mutex;
+
     pthread_mutex_t *first_fork;
     pthread_mutex_t *second_fork;
     //
