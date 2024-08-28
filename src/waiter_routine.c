@@ -44,7 +44,8 @@ static int ft_check_death(t_table *table)
         pthread_mutex_lock(&table->philosophers[i]->last_meal_mutex);
         last_meal = ft_time_milis(table->philosophers[i]->last_meal, table);
         pthread_mutex_unlock(&table->philosophers[i]->last_meal_mutex);
-        if (ft_time_milis(table->current_time, table) > table->time_to_die)
+        gettimeofday(&table->current_time, NULL);
+        if (ft_time_milis(table->current_time, table) - last_meal > table->time_to_die)
         {
             pthread_mutex_lock(&table->end_simulation_mutex);
             table->end_simulation = TRUE;

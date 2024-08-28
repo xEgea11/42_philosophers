@@ -1,11 +1,14 @@
 NAME = philo
 
 CC = gcc -g -O0 -o $(NAME)
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
 
 OBJ_DIR = obj
 SRC_DIR = src
 INC_DIR = include
+
+PHILO_H = $(INC_DIR)/philosophers.h
+TABLE_H = $(INC_DIR)/table.h
 
 SRC = main.c \
 		parse_args.c \
@@ -32,8 +35,8 @@ SANIT = -fsanitize=thread -g
 #PHONY
 all: $(NAME)
 
-$(NAME): $(OBJ)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME)
+$(NAME): $(OBJ) $(PHILO_H) $(TABLE_H)
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -fsanitize=thread
 	@echo "$(GREEN)$(NAME) is ready$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
@@ -96,7 +99,19 @@ run10:
 	./$(NAME) 5 700 200 200
 
 run11:
+	./$(NAME) 5 100 200 200
+
+run12:
+	./$(NAME) 5 300 200 300
+
+run13:
+	./$(NAME) 5 500 0 200
+
+run14:
 	./$(NAME) 200 800 200 200
+
+run15:
+
 
 valgrind:
 	@valgrind --tool=helgrind  ./$(NAME) 4 410 200 200

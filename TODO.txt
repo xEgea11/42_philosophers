@@ -27,6 +27,7 @@ Test_git
 -[DEATHS]	--	How do we do to make philos stop eating once there is someone dead? ✅	<--- with a flag "end_simulation", and each philo needs to check everytime they do an action
 -[KEEP_EATING]	--	IF some of them have eaten X times, maybe they need to keep eating until the last one finishes to avoid death ✅
 -[REFACTOR] 	--	We need to refactor functions and sort them 
+-[STARVATION]	--	They are dying when they shouldn't, maybe add a little delay to force them to think
 
 ------------------------------DETALLES--------------------------------------
 Makefile:

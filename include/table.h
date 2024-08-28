@@ -21,7 +21,7 @@ typedef struct s_data
     
     t_philo **philosophers;
     pthread_t monitor;
-    
+
     int nbr_meals;
     int times_must_eat;
     long time_to_die;
