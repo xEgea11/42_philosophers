@@ -11,10 +11,12 @@ SRC = main.c \
 		parse_args.c \
 		parse_args_utils.c \
 		prints.c \
+		print_utils.c \
 		utils.c \
 		table_funcs.c \
 		philos_routine.c \
 		waiter_routine.c \
+		routine_utils.c \
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
@@ -53,33 +55,48 @@ fclean: clean
 
 re: fclean all
 
+#./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
+
+
 run: 
 	@echo "$(GREEN)Launching philos normal$(RESET)"
-	@./$(NAME) 5 800 200 200 5
+	@./$(NAME) 2 800 200 200
 
 run2:
 	@echo "$(GREEN)Launching 3 philos $(RESET)"
-	@./$(NAME) 3 600 150 150 3
+	@./$(NAME) 5 800 200 200
 
 run3:
 		@echo "$(GREEN)Launching philos no meals$(RESET)"
-	@./$(NAME) 5 800 200 200 
+	@./$(NAME) 4 600 200 100 3
 
-tons:
+run4:
 	@echo "$(GREEN)Launching TONS of philos$(RESET)"
-	@./$(NAME) 50 1000 200 200 10
+	@./$(NAME) 3 800 300 200
 
-edge:
+run5:
 	@echo "$(GREEN)Launching philo with edge cases$(RESET)"
-	@./$(NAME) 5 5000 1000 1000 5
+	@./$(NAME) 7 1000 200 300
 
-single:
+run6:
 	@echo "$(GREEN)Launching single philo$(RESET)"
-	@./$(NAME) ./philo 1 500 100 100 1
+	@./$(NAME) 10 1200 100 100 5
 
-no_way:
+run7:
 	@echo "$(GREEN)Launching philo with no way to eat$(RESET)"
-	@./$(NAME) 5 1 1 1 1
+	@./$(NAME) 100 800 200 200
+
+run8:
+	./$(NAME) 1 1000 200 200
+
+run9:
+	./$(NAME) 2 1000 200 1000 3
+
+run10:
+	./$(NAME) 5 700 200 200
+
+run11:
+	./$(NAME) 200 800 200 200
 
 valgrind:
 	@valgrind --tool=helgrind  ./$(NAME) 4 410 200 200

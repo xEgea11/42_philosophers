@@ -7,11 +7,14 @@ typedef struct s_philo t_philo; //forwarded declaration
 
 typedef struct s_data
 {
-    int end_simulation;
-    int all_philos_ready;
+    int end_simulation;                         //<<----- Monitor sets to one if someone dead; philos check if they can do action
+    pthread_mutex_t end_simulation_mutex;
+
+    int all_philos_ready;           // <---- Not sure if I'll use this one or the one onto the philo struct
 
     struct timeval start_time;  //<--- All philos should start with this time
-    struct timeval end_time;       //<--- A philo dies or everyone has eaten 
+    struct timeval end_time;       //<--- A philo dies or everyone has eaten
+    struct timeval current_time; //<--- Current time for the monitor, no need for mutex 
 
     size_t number_philo;
     pthread_mutex_t *forks;
@@ -20,7 +23,7 @@ typedef struct s_data
     pthread_t monitor;
     
     int nbr_meals;
-    size_t times_must_eat;
+    int times_must_eat;
     long time_to_die;
     long time_to_eat;
     long time_to_sleep;

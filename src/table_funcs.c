@@ -39,6 +39,7 @@ void ft_init_mutexes(t_table *table)
         i++;
     }
     pthread_mutex_init(&table->print_mutex, NULL);
+    pthread_mutex_init(&table->end_simulation_mutex, NULL);
 }
 /*
 */
@@ -65,10 +66,15 @@ void ft_clean_table(t_table *table)
         i++;
     }
     pthread_mutex_destroy(&table->print_mutex);
+    pthread_mutex_destroy(&table->end_simulation_mutex);
     free(table->forks);
     i = 0;
     while (i < table->number_philo)
     {
+        pthread_mutex_destroy(&table->philosophers[i]->arrived_mutex);
+        pthread_mutex_destroy(&table->philosophers[i]->can_eat_mutex);
+        pthread_mutex_destroy(&table->philosophers[i]->full_mutex);
+        pthread_mutex_destroy(&table->philosophers[i]->last_meal_mutex);
         free(table->philosophers[i]);
         i++;
     }
@@ -94,6 +100,7 @@ t_philo *ft_data_init_philo(t_table *table, int id)
     pthread_mutex_init(&philo->arrived_mutex, NULL);
     pthread_mutex_init(&philo->can_eat_mutex, NULL);
     pthread_mutex_init(&philo->full_mutex, NULL);
+    pthread_mutex_init(&philo->last_meal_mutex, NULL);
 
     return (philo);
 }
@@ -134,6 +141,7 @@ void    ft_greet_philos(t_table *table)
         i++;
     }
     gettimeofday(&table->start_time, NULL);
+    table->current_time = table->start_time;
     pthread_create(&table->monitor, NULL, serve, (void *)table);
 }
 

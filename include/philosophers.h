@@ -59,6 +59,7 @@ typedef struct s_philo
     pthread_mutex_t *second_fork;
     //
     int times_eaten;
+    pthread_mutex_t last_meal_mutex;
     struct timeval last_meal;
     struct timeval current_time;
     struct timeval start;
@@ -83,6 +84,13 @@ int ft_parse_numbers(char **argv);
 int ft_no_meals_condition(int argc, char *argv[]);
 int ft_one_philo(char *argv[]);
 
+
+//Routine utils functions
+int ft_check_critical_end_dinner(t_table *table);
+void ft_set_critical_arrived(t_philo *philo, int value);
+int ft_get_critical_can_eat(t_philo *philo);
+void ft_set_critical_full(t_philo *philo, int value);
+
 //Routine functions
 void *say_hello(void *arg);
 void *serve(void *arg);
@@ -93,5 +101,12 @@ void ft_print_action(t_philo *philo, struct timeval time, int id, int opcode);
 //Utils functions
 long ft_time_milis(struct timeval time, t_table *table);
 long ft_milis_to_micros(long milis);
+
+//Print functions
+void ft_print_fork_taken(t_philo *philo, struct timeval time, int id);
+void ft_print_eating(t_philo *philo, struct timeval time, int id);
+void ft_print_sleeping(t_philo *philo, struct timeval time, int id);
+void ft_print_thinking(t_philo *philo, struct timeval time, int id);
+void ft_print_dead(t_philo *philo, struct timeval time, int id);
 
 #endif
