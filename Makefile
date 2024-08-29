@@ -1,6 +1,6 @@
 NAME = philo
 
-CC = gcc -g -O0 -o $(NAME)
+CC = gcc -O0 -o $(NAME)
 SANIT = -fsanitize=thread -g  
 CFLAGS = -Wall -Wextra -Werror $(SANIT)
 
@@ -35,7 +35,6 @@ RED = \033[0;31m
 YELLOW = \033[0;33m
 RESET = \033[0m
 
-#this doesnt work for the moment [seg_fault->core_dumped]
 #PHONY
 all: $(NAME)
 

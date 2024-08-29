@@ -1,4 +1,16 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_args.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 12:38:06 by regea-go          #+#    #+#             */
+/*   Updated: 2024/08/29 12:38:07 by regea-go         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "table.h"
 
 int ft_parse_numbers(char **argv)
 {
@@ -8,7 +20,7 @@ int ft_parse_numbers(char **argv)
     i = 0;
     while (argv[i])
     {   
-        number = ft_atol(argv[i]);           // <--- It puts to a long just check, but it has to be a positive int
+        number = ft_atol(argv[i]);
         if (number == -1)
             return (FALSE);
         if ((i == 2 || i == 3 || i == 4) && number < 60)

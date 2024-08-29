@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   table.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 12:38:22 by regea-go          #+#    #+#             */
+/*   Updated: 2024/08/29 12:38:23 by regea-go         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef TABLE_H
 
 # define TABLE_H
@@ -37,8 +49,6 @@ void ft_assign_forks(t_table *table, t_philo *philo, int id);
 t_philo *ft_data_init_philo(t_table *table, int id);
 t_philo *ft_enter_philo(t_table *table, int i);
 void    ft_greet_philos(t_table *table);
-
-int ft_table_for_one(t_table *table);
 
 t_table *ft_set_table(int argc, char *argv[]);
 void    ft_finish_dinner(t_table *table);

@@ -6,14 +6,11 @@
 /*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/25 12:18:52 by regea-go          #+#    #+#             */
-/*   Updated: 2024/08/29 12:14:25 by regea-go         ###   ########.fr       */
+/*   Updated: 2024/08/29 12:37:24 by regea-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "table.h"
-
-//./philo [number_of_philosophers] [time_to_die] [time_to_eat] [time_to_sleep] [number_of_times_each_philosopher_must_eat]
 
 int main(int argc, char *argv[])
 {

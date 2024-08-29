@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   philo_actions.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 12:36:40 by regea-go          #+#    #+#             */
+/*   Updated: 2024/08/29 12:36:41 by regea-go         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "table.h"
 
 void ft_get_forks(t_philo *philo)
 {
-    if (philo->first_fork == philo->second_fork)                //<---- One philo cond
+    if (philo->first_fork == philo->second_fork)
     {
         pthread_mutex_lock(philo->first_fork);
         ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);

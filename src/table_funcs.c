@@ -1,4 +1,15 @@
-#include "philosophers.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   table_funcs.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/08/29 12:37:30 by regea-go          #+#    #+#             */
+/*   Updated: 2024/08/29 12:37:33 by regea-go         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "table.h"
 
 t_table *ft_init_data_table(int argc, char *argv[])
@@ -76,11 +87,4 @@ void ft_finish_dinner(t_table *table)
         i++;
     }
     pthread_join(table->monitor, NULL);
-}
-
-int ft_table_for_one(t_table *table)
-{
-    printf("Im alone :(\n");
-    
-    return (EXIT_SUCCESS);
 }
