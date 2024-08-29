@@ -23,17 +23,12 @@
 # define SLEEPING 1
 # define EATING 2
 # define DEAD 3
-# define LEFT 4
-# define ARRIVED 5
 
 # define FIRST_FORK 0
 # define SECOND_FORK 1
 
 # define FORK_TAKEN 6
 # define FORK_FREE 7
-
-# define READ 1
-# define WRITE 0
 
 # define GREEN "\033[0;32m"
 # define BLUE "\033[0;34m"

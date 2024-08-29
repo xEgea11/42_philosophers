@@ -32,10 +32,14 @@ typedef struct s_data
 }   t_table;
 
 
-t_table *ft_set_table(int argc, char *argv[]);
+void ft_init_mutexes(t_table *table);
+void ft_assign_forks(t_table *table, t_philo *philo, int id);
+t_philo *ft_data_init_philo(t_table *table, int id);
 t_philo *ft_enter_philo(t_table *table, int i);
 void    ft_greet_philos(t_table *table);
+
+t_table *ft_set_table(int argc, char *argv[]);
 void    ft_finish_dinner(t_table *table);
-void ft_clean_table(t_table *table);
+void    ft_clean_table(t_table *table);
 
 #endif

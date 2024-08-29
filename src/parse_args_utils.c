@@ -35,7 +35,7 @@ int ft_check_argc(int argc)
 {
     if (!(argc == 5 || argc == 6))
     {
-        printf("Error: wrong number of arguments\n");
+        printf("Error\n");
         return (FALSE);
     }
     return (TRUE);

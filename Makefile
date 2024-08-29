@@ -17,11 +17,13 @@ SRC = main.c \
 		print_utils.c \
 		utils.c \
 		table_funcs.c \
+		table_funcs_utils.c \
 		philos_routine.c \
 		philo_actions.c \
 		waiter_routine.c \
 		waiter_actions.c \
-		routine_utils.c \
+		critical_regions_setters.c \
+		critical_regions_getters.c
 
 
 OBJ = $(addprefix $(OBJ_DIR)/, $(SRC:.c=.o))
