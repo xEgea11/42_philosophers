@@ -6,7 +6,7 @@
 /*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:36:40 by regea-go          #+#    #+#             */
-/*   Updated: 2024/08/29 12:36:41 by regea-go         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:12:32 by regea-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,5 @@ void ft_sleep(t_philo *philo)
 void ft_think(t_philo *philo)
 {
     if (ft_get_critical_end_dinner(philo->table) == FALSE)
-    {
-        if (philo->table->time_to_eat >= philo->table->time_to_sleep)
-            usleep(ft_milis_to_micros(philo->table->time_to_eat) - ft_milis_to_micros(philo->table->time_to_sleep) + 1000);
         ft_print_action(philo, philo->current_time, philo->id, THINKING);
-    }
 }

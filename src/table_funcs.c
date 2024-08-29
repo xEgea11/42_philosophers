@@ -6,7 +6,7 @@
 /*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:37:30 by regea-go          #+#    #+#             */
-/*   Updated: 2024/08/29 12:37:33 by regea-go         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:03:55 by regea-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ t_table *ft_init_data_table(int argc, char *argv[])
     table->forks = malloc(sizeof(pthread_mutex_t) * table->number_philo);
     table->philosophers = malloc(sizeof(t_philo *) * table->number_philo);
     table->end_simulation = FALSE;
-    table->all_philos_ready = FALSE;
     table->time_to_die = ft_atol(argv[2]);
     table->time_to_eat = ft_atol(argv[3]);
     table->time_to_sleep = ft_atol(argv[4]);

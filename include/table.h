@@ -6,7 +6,7 @@
 /*   By: regea-go <regea-go@student.42malaga.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/29 12:38:22 by regea-go          #+#    #+#             */
-/*   Updated: 2024/08/29 12:38:23 by regea-go         ###   ########.fr       */
+/*   Updated: 2024/08/29 16:03:46 by regea-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,12 @@ typedef struct s_philo t_philo; //forwarded declaration
 
 typedef struct s_data
 {
-    int end_simulation;                         //<<----- Monitor sets to one if someone dead; philos check if they can do action
+    int end_simulation;
     pthread_mutex_t end_simulation_mutex;
 
-    int all_philos_ready;           // <---- Not sure if I'll use this one or the one onto the philo struct
-
-    struct timeval start_time;  //<--- All philos should start with this time
-    struct timeval end_time;       //<--- A philo dies or everyone has eaten
-    struct timeval current_time; //<--- Current time for the monitor, no need for mutex 
+    struct timeval start_time;
+    struct timeval end_time;
+    struct timeval current_time;
 
     size_t number_philo;
     pthread_mutex_t *forks;
