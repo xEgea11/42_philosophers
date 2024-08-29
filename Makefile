@@ -18,7 +18,9 @@ SRC = main.c \
 		utils.c \
 		table_funcs.c \
 		philos_routine.c \
+		philo_actions.c \
 		waiter_routine.c \
+		waiter_actions.c \
 		routine_utils.c \
 
 
@@ -62,31 +64,24 @@ re: fclean all
 
 
 run: 
-	@echo "$(GREEN)Launching philos normal$(RESET)"
 	@./$(NAME) 2 800 200 200
 
 run2:
-	@echo "$(GREEN)Launching 3 philos $(RESET)"
 	@./$(NAME) 5 800 200 200
 
 run3:
-		@echo "$(GREEN)Launching philos no meals$(RESET)"
 	@./$(NAME) 4 600 200 100 3
 
 run4:
-	@echo "$(GREEN)Launching TONS of philos$(RESET)"
 	@./$(NAME) 3 800 300 200
 
 run5:
-	@echo "$(GREEN)Launching philo with edge cases$(RESET)"
 	@./$(NAME) 7 1000 200 300
 
 run6:
-	@echo "$(GREEN)Launching single philo$(RESET)"
 	@./$(NAME) 10 1200 100 100 5
 
 run7:
-	@echo "$(GREEN)Launching philo with no way to eat$(RESET)"
 	@./$(NAME) 100 800 200 200
 
 run8:
@@ -116,4 +111,4 @@ run15:
 valgrind:
 	@valgrind --tool=helgrind  ./$(NAME) 4 410 200 200
 
-.PHONY: all clean fclean re run run2 run3 single no_way
+.PHONY: all clean fclean re run run2 run3 valgrind

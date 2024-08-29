@@ -86,10 +86,34 @@ int ft_one_philo(char *argv[]);
 
 
 //Routine utils functions
-int ft_check_critical_end_dinner(t_table *table);
+int ft_get_critical_end_dinner(t_table *table);
+void ft_set_critical_end_dinner(t_table *table, int value);
+
+int ft_get_critical_arrived(t_philo *philo);
 void ft_set_critical_arrived(t_philo *philo, int value);
+
 int ft_get_critical_can_eat(t_philo *philo);
+void ft_set_critical_can_eat(t_philo *philo, int value);
+
+int ft_get_critical_full(t_philo *philo);
 void ft_set_critical_full(t_philo *philo, int value);
+
+int ft_get_critical_last_meal(t_philo *philo);
+void ft_set_critical_last_meal(t_philo *philo, int value);
+
+//Philo actions
+void ft_get_forks(t_philo *philo);
+void ft_leave_forks(t_philo *philo);
+void ft_eat(t_philo *philo);
+void ft_sleep(t_philo *philo);
+void ft_think(t_philo *philo);
+
+//Waiter actions
+int ft_waiting_for_philos(t_table *table);
+void ft_start_dinner(t_table *table);
+int ft_check_death(t_table *table);
+int ft_everyone_ate(t_table *table);
+
 
 //Routine functions
 void *say_hello(void *arg);

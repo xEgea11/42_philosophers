@@ -11,7 +11,7 @@ Test_git
 -[Algorithm] structure the algorithm in taking the forks so there is no deadlock ---> Looks like OK ✅
 -[Starvation]	--> Apparently this manner can cause starvation --> Maybe we should force the philos to think
 																	a fraction of the time  ✅ --> Still not needed
--[Error_checking] Check errors for thread init and thread join, at least  ❌	---> Valgrind and Helgrind
+-[Error_checking] Check errors for thread init and thread join, at least  ✅ ---> Valgrind and Helgrind
 -[Print function, data races] 	Since we changed the print function, 
 								so it has all the actions, there are data races, 
 								look where we need to put the mutex at			✅	--- Do we actually need it?
@@ -27,7 +27,7 @@ Test_git
 -[DEATHS]	--	How do we do to make philos stop eating once there is someone dead? ✅	<--- with a flag "end_simulation", and each philo needs to check everytime they do an action
 -[KEEP_EATING]	--	IF some of them have eaten X times, maybe they need to keep eating until the last one finishes to avoid death ✅
 -[REFACTOR] 	--	We need to refactor functions and sort them 
--[STARVATION]	--	They are dying when they shouldn't, maybe add a little delay to force them to think
+-[STARVATION]	--	They are dying when they shouldn't, maybe add a little delay to force them to think ❌
 
 ------------------------------DETALLES--------------------------------------
 Makefile:
