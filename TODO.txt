@@ -22,12 +22,13 @@ Test_git
 -[Times_must_eat] 	Change the hardcode that we have 
 					so philos eat indefenitely if no "times_must_eat" is declared	--	TODO  ✅
 -[philo_info]	Probably we need to add a ptr of the table to each philo, even if I didnt want to ✅
--[1 philo function] -- Implement the case where there is only one philo ❌
+-[1 philo function] -- Implement the case where there is only one philo ✅
 -[Timestamp]	--	Current time in ms --- Do we need to set at 0 with "start time?" ✅
 -[DEATHS]	--	How do we do to make philos stop eating once there is someone dead? ✅	<--- with a flag "end_simulation", and each philo needs to check everytime they do an action
 -[KEEP_EATING]	--	IF some of them have eaten X times, maybe they need to keep eating until the last one finishes to avoid death ✅
 -[REFACTOR] 	--	We need to refactor functions and sort them ✅
 -[STARVATION]	--	They are dying when they shouldn't, maybe add a little delay to force them to think ❌
+-[PRINT]		--	Remove colors from printfs ❌
 
 ------------------------------DETALLES--------------------------------------
 Makefile:

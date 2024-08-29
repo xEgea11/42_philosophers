@@ -50,7 +50,8 @@ void ft_think(t_philo *philo)
 {
     if (ft_get_critical_end_dinner(philo->table) == FALSE)
     {
-        usleep(1000 * 50);                                  //Check this; Mbe needed for starvation
+        if (philo->table->time_to_eat >= philo->table->time_to_sleep)
+            usleep(ft_milis_to_micros(philo->table->time_to_eat) - ft_milis_to_micros(philo->table->time_to_sleep) + 1000);
         ft_print_action(philo, philo->current_time, philo->id, THINKING);
     }
 }
