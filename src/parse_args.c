@@ -34,10 +34,3 @@ int ft_no_meals_condition(int argc, char *argv[])
         return (TRUE);
     return (FALSE);
 }
-
-int ft_one_philo(char *argv[])
-{
-    if (ft_atol(argv[1]) == 1) 
-        return (TRUE);                  //<--- Ad hoc function for one philosopher
-    return (FALSE);
-}

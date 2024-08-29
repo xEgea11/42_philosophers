@@ -1,7 +1,8 @@
 NAME = philo
 
 CC = gcc -g -O0 -o $(NAME)
-CFLAGS = -Wall -Wextra -Werror -fsanitize=thread -g
+SANIT = -fsanitize=thread -g  
+CFLAGS = -Wall -Wextra -Werror $(SANIT)
 
 OBJ_DIR = obj
 SRC_DIR = src
@@ -35,12 +36,11 @@ YELLOW = \033[0;33m
 RESET = \033[0m
 
 #this doesnt work for the moment [seg_fault->core_dumped]
-SANIT = -fsanitize=thread -g  
 #PHONY
 all: $(NAME)
 
 $(NAME): $(OBJ) $(PHILO_H) $(TABLE_H)
-	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) -fsanitize=thread
+	@$(CC) $(CFLAGS) $(OBJ) -o $(NAME) $(SANIT)
 	@echo "$(GREEN)$(NAME) is ready$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c

@@ -2,16 +2,26 @@
 
 void ft_get_forks(t_philo *philo)
 {
-    pthread_mutex_lock(philo->first_fork);
-    ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
-    pthread_mutex_lock(philo->second_fork);
-    ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+    if (philo->first_fork == philo->second_fork)                //<---- One philo cond
+    {
+        pthread_mutex_lock(philo->first_fork);
+        ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+        while (ft_get_critical_end_dinner(philo->table) == FALSE)
+            ;
+    }
+    else 
+    {
+        pthread_mutex_lock(philo->first_fork);
+        ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+        pthread_mutex_lock(philo->second_fork);
+        ft_print_action(philo, philo->current_time, philo->id, FORK_TAKEN);
+    }
 }
 
 void ft_leave_forks(t_philo *philo)
 {
-    pthread_mutex_unlock(philo->first_fork);
-    pthread_mutex_unlock(philo->second_fork);
+        pthread_mutex_unlock(philo->first_fork);
+        pthread_mutex_unlock(philo->second_fork);
 }
 
 void ft_eat(t_philo *philo)
@@ -40,7 +50,7 @@ void ft_think(t_philo *philo)
 {
     if (ft_get_critical_end_dinner(philo->table) == FALSE)
     {
-        usleep(1000 * 50);  //Mbe needed for starvation
+        usleep(1000 * 50);                                  //Check this; Mbe needed for starvation
         ft_print_action(philo, philo->current_time, philo->id, THINKING);
     }
 }

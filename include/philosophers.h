@@ -9,14 +9,11 @@
 # include <unistd.h>
 # include "table.h"
 
-
 # define EXIT_SUCCESS 0
 # define EXIT_FAILURE 1
 
 # define TRUE 1
 # define FALSE 0
-
-
 
 //OPCODES
 # define THINKING 0
@@ -77,7 +74,6 @@ int ft_check_argc(int argc);
 int ft_parse_args(int argc, char **argv);
 int ft_parse_numbers(char **argv);
 int ft_no_meals_condition(int argc, char *argv[]);
-int ft_one_philo(char *argv[]);
 
 
 //Routine utils functions

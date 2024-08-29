@@ -11,10 +11,7 @@ void *serve(void *arg)
     while (!ft_everyone_ate(table))
     {
         if (ft_check_death(table) == TRUE)
-        {
-            printf(RED " 🚨 CALL THE AMBULANCE!! 🚨\n" RESET);
             return (NULL);
-        }
     }
     ft_set_critical_end_dinner(table, TRUE);
     return (NULL);

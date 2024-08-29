@@ -48,9 +48,9 @@ void ft_clean_table(t_table *table)
         pthread_mutex_destroy(&table->forks[i]);
         i++;
     }
+    free(table->forks);
     pthread_mutex_destroy(&table->print_mutex);
     pthread_mutex_destroy(&table->end_simulation_mutex);
-    free(table->forks);
     i = 0;
     while (i < table->number_philo)
     {
@@ -62,8 +62,6 @@ void ft_clean_table(t_table *table)
         i++;
     }
     free (table->philosophers);
-    gettimeofday(&table->end_time, NULL);
-    printf(RED "Restaurant closed: %ld\n" RESET, ft_time_milis(table->end_time, table));        //Remove this 
     free(table);
 }
 
@@ -78,4 +76,11 @@ void ft_finish_dinner(t_table *table)
         i++;
     }
     pthread_join(table->monitor, NULL);
+}
+
+int ft_table_for_one(t_table *table)
+{
+    printf("Im alone :(\n");
+    
+    return (EXIT_SUCCESS);
 }
